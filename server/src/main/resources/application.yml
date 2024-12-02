@@ -1,0 +1,36 @@
+
+
+spring:
+  application:
+    name: server
+
+# reconfig
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/java_project
+    password:
+    username: user
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+    open-in-view: true
+
+# reconfig
+  flyway:
+    locations: classpath:db/migration
+    baseline-on-migrate: true
+    baseline-version: 0
+    enabled: true
+    user: user
+    password:
+
+key:
+  SECRET_KEY: "jb6NpC/4FL0WbOr7wez6TQiKQczZyuEj5z8tJd4E4A9h4DimCzsHi3KpIGjk2lVl"
+
+image:
+  USER_DIR: "src/main/resources/image/USER"
+  PRODUCT_DIR: "src/main/resources/image/PRODUCT"
+server:
+  port: 9090
