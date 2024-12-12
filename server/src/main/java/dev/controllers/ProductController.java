@@ -22,7 +22,6 @@ public class ProductController {
     }
 
     @GetMapping
-    @PreAuthorize("hasRole('ADMIN')")
     public ApiResponse<List<ProductResponse>> getAll ()
     {
         return ApiResponse.<List<ProductResponse>>builder()

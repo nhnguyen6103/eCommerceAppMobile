@@ -16,10 +16,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableMethodSecurity
 public class SecurityConfig {
 
-    private final String[] PUBLIC_ENDPOINT = {
-            "/user",
-            "/auth/signin"
-    };
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
     public SecurityConfig(JwtAuthenticationFilter jwtAuthenticationFilter) {
@@ -33,7 +29,10 @@ public class SecurityConfig {
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .authorizeHttpRequests(request -> request
                         //Do not require check token
-                        .requestMatchers(HttpMethod.POST,PUBLIC_ENDPOINT).permitAll()
+                        .requestMatchers(HttpMethod.POST,"/user").permitAll()
+                        .requestMatchers(HttpMethod.POST,"/auth/signin").permitAll()
+                        .requestMatchers(HttpMethod.GET,"/product").permitAll()
+                        .requestMatchers(HttpMethod.GET,"/category").permitAll()
                         //Require check token
                         .anyRequest().authenticated()
         );

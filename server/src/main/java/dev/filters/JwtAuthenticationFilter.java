@@ -107,6 +107,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         final Map<String, String> bypassToken = new HashMap<>();
         bypassToken.put("/user", "POST");
         bypassToken.put("/auth/signin", "POST");
+        bypassToken.put("/product","GET");
+        bypassToken.put("/category","GET");
 
         // Get request Endpoint and Method
         String requestPath = request.getServletPath();

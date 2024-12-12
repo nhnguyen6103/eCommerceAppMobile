@@ -26,6 +26,7 @@ public class ProductMapper {
 
             ProductResponse.ProductResponseBuilder productResponse = ProductResponse.builder();
             productResponse.id(product.getId());
+            productResponse.name(product.getName());
             productResponse.imageURL(product.getImageURL());
             productResponse.category(cate.getName());
             productResponse.description(product.getDescription());

@@ -9,6 +9,7 @@ import lombok.Data;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class ProductResponse {
     private String  id;
+    private String name;
     private String  category;
     private String  imageURL;
     private String  description;
