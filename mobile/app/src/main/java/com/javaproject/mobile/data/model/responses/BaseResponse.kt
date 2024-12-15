@@ -13,5 +13,5 @@ data class BaseResponse<T> (
     @SerializedName("count")
     val count: Int?,
     @SerializedName("data")
-    val data: T
+    val data: T?
 )

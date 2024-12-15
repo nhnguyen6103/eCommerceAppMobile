@@ -12,13 +12,6 @@ import retrofit2.http.POST
 import retrofit2.http.PUT
 
 interface AuthApi {
-
     @POST("auth/signin")
-    fun signin(@Body request: AuthRequest): Call<BaseResponse<AuthResponse>>
-
-    @POST("user")
-    fun createUser(@Body request: UserRequest): Call<BaseResponse<UserResponse>>
-
-//    @PATCH("user")
-//    fun updateUserDetail(@Body )
+    suspend fun signin(@Body request: AuthRequest): BaseResponse<AuthResponse>
 }
