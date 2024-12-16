@@ -12,5 +12,6 @@ import java.util.List;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class CartResponse {
     private String cartID;
+    private Integer quantity;
     private List<CartItemsResponse> listItems;
 }

@@ -46,9 +46,10 @@ public class UserController {
     }
 
     @PatchMapping()
-    public ApiResponse<UserResponse> updateUser( @RequestBody Map<String,Object> updateFields)
+    public ApiResponse<UserResponse> updateUser(
+            @RequestAttribute("userID") String userID,
+            @RequestBody Map<String,Object> updateFields)
     {
-        String userID = authService.getIdFromAuthentication();
         return ApiResponse.<UserResponse>builder()
                 .status(HttpStatus.OK.value())
                 .message("UPDATE SUCCESSFULLY")
@@ -57,9 +58,10 @@ public class UserController {
     }
 
     @PutMapping()
-    public ApiResponse<UserResponse> updateUserImage( @RequestParam("image") MultipartFile file)
+    public ApiResponse<UserResponse> updateUserImage(
+            @RequestAttribute("userID") String userID,
+            @RequestParam("image") MultipartFile file)
     {
-        String userID = authService.getIdFromAuthentication();
         return ApiResponse.<UserResponse>builder()
                 .status(HttpStatus.OK.value())
                 .message("UPDATE SUCCESSFULLY")

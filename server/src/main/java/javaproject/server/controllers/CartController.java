@@ -4,7 +4,6 @@ package javaproject.server.controllers;
 import javaproject.server.dtos.requests.CartRequest;
 import javaproject.server.dtos.responses.ApiResponse;
 import javaproject.server.dtos.responses.CartResponse;
-import javaproject.server.services.AuthenticationService;
 import javaproject.server.services.CartService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -14,17 +13,18 @@ import org.springframework.web.bind.annotation.*;
 public class CartController {
 
     private final CartService cartService;
-    private final AuthenticationService authService;
 
-    public CartController(CartService cartService, AuthenticationService authService) {
+
+    public CartController(CartService cartService) {
         this.cartService = cartService;
-        this.authService = authService;
+
     }
 
     @PostMapping()
-    public ApiResponse<CartResponse> addProduct (@RequestBody CartRequest request)
+    public ApiResponse<CartResponse> addProduct (
+            @RequestAttribute("userID") String userID,
+            @RequestBody CartRequest request)
     {
-        String userID = authService.getIdFromAuthentication();
         return ApiResponse.<CartResponse>builder()
                 .status(HttpStatus.OK.value())
                 .message("ADD PRODUCT TO CART SUCCESSFULLY")
@@ -33,9 +33,10 @@ public class CartController {
     }
 
     @PutMapping()
-    public ApiResponse<CartResponse> updateProduct (@RequestBody CartRequest request)
+    public ApiResponse<CartResponse> updateProduct (
+            @RequestAttribute("userID") String userID,
+            @RequestBody CartRequest request)
     {
-        String userID = authService.getIdFromAuthentication();
         return ApiResponse.<CartResponse>builder()
                 .status(HttpStatus.OK.value())
                 .message("UPDATE PRODUCT's QUANTITY SUCCESSFULLY")
@@ -46,9 +47,9 @@ public class CartController {
     //Delete 1 product in cart
     @DeleteMapping("/{productID}")
     public ApiResponse<CartResponse> deleteProduct (
+            @RequestAttribute("userID") String userID,
             @PathVariable String productID)
     {
-        String userID = authService.getIdFromAuthentication();
         return ApiResponse.<CartResponse>builder()
                 .status(HttpStatus.OK.value())
                 .message("UPDATE PRODUCT's QUANTITY SUCCESSFULLY")
@@ -57,8 +58,9 @@ public class CartController {
     }
 
     @GetMapping()
-    public ApiResponse<CartResponse> getCart () {
-        String userID = authService.getIdFromAuthentication();
+    public ApiResponse<CartResponse> getCart (
+            @RequestAttribute("userID") String userID
+    ) {
         return ApiResponse.<CartResponse>builder()
                 .status(HttpStatus.OK.value())
                 .message("UPDATE PRODUCT's QUANTITY SUCCESSFULLY")

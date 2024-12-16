@@ -8,20 +8,20 @@ import jakarta.servlet.http.HttpServletResponse;
 import javaproject.server.dtos.responses.ApiResponse;
 import javaproject.server.exception.AppException;
 import javaproject.server.exception.ErrorCode;
-import javaproject.server.repositories.UserRepository;
-import javaproject.server.services.ImpUserDetailsService;
 import javaproject.server.services.JwtService;
 import lombok.NonNull;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -30,11 +30,9 @@ import java.util.Map;
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final JwtService jwtService;
-    private final UserRepository userRepository;
 
-    public JwtAuthenticationFilter(JwtService jwtService, UserRepository userRepository) {
+    public JwtAuthenticationFilter(JwtService jwtService) {
         this.jwtService = jwtService;
-        this.userRepository = userRepository;
     }
 
     protected void doFilterInternal(@NonNull HttpServletRequest request,
@@ -63,42 +61,63 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             }
 
             final String jwtToken = authHeader.substring(7);
-            final String userID = jwtService.extractUserID(jwtToken);
-
-            // If userID is existed and Authentication is empty
-//            if(userID != null && SecurityContextHolder.getContext().getAuthentication() == null)
-//            {
-//                // Load user
-//                UserDetails userDetail = userDetailsService.loadUserByID(userID);
-//                if(userDetail == null)
-//                {
-//                    response.sendError(HttpServletResponse.SC_UNAUTHORIZED,"Unauthorized");
-//                    return;
-//                }
-//
-//                // Check token is valid or not
-//                if (jwtService.isValidToken(jwtToken, userDetail))
-//                {
-//                    UsernamePasswordAuthenticationToken authenticationToken =
-//                            new UsernamePasswordAuthenticationToken(
-//                                    userDetail,
-//                                    null,
-//                                    userDetail.getAuthorities());
-//
-//                    authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-//                    SecurityContextHolder.getContext().setAuthentication(authenticationToken);
-//
-//                }
-//            }
-
-            if(userID == null || !userRepository.existsById(userID))
+            if(!jwtService.isValidToken(jwtToken))
             {
-//                response.sendError(HttpServletResponse.SC_UNAUTHORIZED,"Unauthorized");
-//                return;
-
                 sendErrorResponse(response, new AppException(ErrorCode.INVALID_REQUEST).getApiResponse());
                 return;
             }
+
+            final String requestUserID = jwtService.getUserID(jwtToken);
+            request.setAttribute("userID",requestUserID);
+
+            GrantedAuthority authority = new SimpleGrantedAuthority("ROLE_" + jwtService.getRole(jwtToken).toUpperCase());
+            // Tạo Authentication
+            Authentication auth = new UsernamePasswordAuthenticationToken(null, null, List.of(authority));
+
+            // Đặt Authentication vào SecurityContext
+            SecurityContextHolder.getContext().setAuthentication(auth);
+
+            /*
+
+             */
+
+//            final String jwtToken = authHeader.substring(7);
+//            final String userID = jwtService.extractUserID(jwtToken);
+//
+//            // If userID is existed and Authentication is empty
+////            if(userID != null && SecurityContextHolder.getContext().getAuthentication() == null)
+////            {
+////                // Load user
+////                UserDetails userDetail = userDetailsService.loadUserByID(userID);
+////                if(userDetail == null)
+////                {
+////                    response.sendError(HttpServletResponse.SC_UNAUTHORIZED,"Unauthorized");
+////                    return;
+////                }
+////
+////                // Check token is valid or not
+////                if (jwtService.isValidToken(jwtToken, userDetail))
+////                {
+////                    UsernamePasswordAuthenticationToken authenticationToken =
+////                            new UsernamePasswordAuthenticationToken(
+////                                    userDetail,
+////                                    null,
+////                                    userDetail.getAuthorities());
+////
+////                    authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+////                    SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+////
+////                }
+////            }
+//
+//            if(userID == null || !userRepository.existsById(userID))
+//            {
+////                response.sendError(HttpServletResponse.SC_UNAUTHORIZED,"Unauthorized");
+////                return;
+//
+//                sendErrorResponse(response, new AppException(ErrorCode.INVALID_REQUEST).getApiResponse());
+//                return;
+//            }
 
              filterChain.doFilter(request,response);
 

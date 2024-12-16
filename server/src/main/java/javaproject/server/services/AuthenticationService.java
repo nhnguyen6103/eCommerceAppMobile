@@ -44,19 +44,9 @@ public class AuthenticationService {
 
     }
 
-
     public PasswordEncoder passwordEncoder()
     {
         return new BCryptPasswordEncoder(10);
     }
 
-    public String getIdFromAuthentication()
-    {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if(auth == null)
-        {
-            throw new AppException(ErrorCode.UNAUTHORIZED);
-        }
-        return  auth.getName();
-    }
 }

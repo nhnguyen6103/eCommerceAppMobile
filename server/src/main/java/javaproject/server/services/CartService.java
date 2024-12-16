@@ -75,6 +75,7 @@ public class CartService {
 
         return CartResponse.builder()
                 .cartID(cart.getId())
+                .quantity(list.size())
                 .listItems(list)
                 .build();
     }
@@ -112,6 +113,7 @@ public class CartService {
 
         return CartResponse.builder()
                 .cartID(cart.getId())
+                .quantity(list.size())
                 .listItems(list)
                 .build();
     }
@@ -143,6 +145,7 @@ public class CartService {
         }
         return CartResponse.builder()
                 .cartID(cart.getId())
+                .quantity(list.size())
                 .listItems(list)
                 .build();
     }
@@ -163,6 +166,7 @@ public class CartService {
 
         return CartResponse.builder()
                 .cartID(cart.getId())
+                .quantity(list.size())
                 .listItems(list)
                 .build();
     }

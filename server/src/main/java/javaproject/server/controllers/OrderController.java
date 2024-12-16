@@ -4,7 +4,6 @@ package javaproject.server.controllers;
 import javaproject.server.dtos.requests.OrderRequest;
 import javaproject.server.dtos.responses.ApiResponse;
 import javaproject.server.dtos.responses.OrderResponse;
-import javaproject.server.services.AuthenticationService;
 import javaproject.server.services.OrderService;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -16,17 +15,16 @@ import java.util.List;
 @RequestMapping("/order")
 public class OrderController {
     private final OrderService orderService;
-    private final AuthenticationService authService;
 
-    public OrderController(OrderService orderService, AuthenticationService authService) {
+
+    public OrderController(OrderService orderService) {
         this.orderService = orderService;
-        this.authService = authService;
     }
 
     @GetMapping()
-    public ApiResponse<List<OrderResponse>> getOrders ()
+    public ApiResponse<List<OrderResponse>> getOrders (@RequestAttribute("userID") String userID)
     {
-        String userID = authService.getIdFromAuthentication();
+
         return ApiResponse.<List<OrderResponse>>builder()
                 .status(HttpStatus.OK.value())
                 .message("Success")
@@ -35,9 +33,10 @@ public class OrderController {
     }
 
     @PostMapping()
-    public ApiResponse<OrderResponse> createOrder(@RequestBody OrderRequest request)
+    public ApiResponse<OrderResponse> createOrder(
+            @RequestAttribute("userID") String userID,
+            @RequestBody OrderRequest request)
     {
-        String userID = authService.getIdFromAuthentication();
         return ApiResponse.<OrderResponse>builder()
                 .status(HttpStatus.CREATED.value())
                 .message("CREATE SUCCESS")
