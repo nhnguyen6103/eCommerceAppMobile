@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTS orders (
     updated_at TIMESTAMP,
     payment_method VARCHAR(255),
     shipping_method VARCHAR(255),
-    FOREIGN KEY (user_id) REFERENCES users(id)
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE  CASCADE
 );
 
 INSERT INTO orders (id, user_id, total_amount, status, shipping_address, created_at, updated_at, payment_method, shipping_method)

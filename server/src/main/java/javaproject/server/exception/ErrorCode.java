@@ -5,7 +5,7 @@ import lombok.Getter;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 
-@Getter
+
 public enum ErrorCode {
     INVALID_ARGUMENT(0, "INVALID ARGUMENT",HttpStatus.BAD_REQUEST),
     USER_EXISTED(-1,"USER ALREADY EXISTED",HttpStatus.BAD_REQUEST),
@@ -32,5 +32,17 @@ public enum ErrorCode {
         this.returnCode = returnCode;
         this.message = message;
         this.status = status;
+    }
+
+    public int getReturnCode() {
+        return returnCode;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public HttpStatusCode getStatus() {
+        return status;
     }
 }

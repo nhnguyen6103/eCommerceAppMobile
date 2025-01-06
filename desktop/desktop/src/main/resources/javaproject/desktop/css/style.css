@@ -1,0 +1,55 @@
+.root{
+    -fx-background-color: #3E5879 ;
+    -fx-border-color: #F5EFE7;
+    -fx-border-width: 2px 2px 2px 2px;
+    -fx-border-radius: 22px;
+    -fx-background-radius: 20px;
+    -fx-border-style: solid;
+}
+.side_bar{
+    -fx-background-color: #213555;
+    -fx-border-color: #F5EFE7;
+    -fx-border-width: 2px 2px 2px 2px;
+    -fx-border-radius: 20px;
+    -fx-background-radius: 20px;
+    -fx-border-style: solid;
+}
+
+.infor_pane{
+    -fx-background-color: #D8C4B6;
+    -fx-border-width: 2px 2px 2px 2px;
+    -fx-border-radius: 20px;
+    -fx-background-radius: 20px;
+    -fx-border-style: solid;
+    -fx-border-color: #D8C4B6;
+}
+
+.productBtn{
+    -fx-background-color: #D8C4B6;
+    -fx-border-width: 2px 2px 2px 2px;
+    -fx-border-radius: 20px;
+    -fx-background-radius: 20px;
+    -fx-border-style: solid;
+    -fx-border-color: #FFFDF0;
+    -fx-font-size: 15px;
+    -fx-text-alignment: center;
+}
+
+.main_field{
+    -fx-pref-height: 750px;
+    -fx-pref-width: 900px;
+}
+
+.header{
+    -fx-font-size: 48px;
+}
+
+.item_field{
+    -fx-pref-height: 650px;
+    -fx-pref-width: 900px;
+}
+
+.product_item{
+    -fx-background-color: #FFFFFF;
+    -fx-background-radius: 30px;
+}
