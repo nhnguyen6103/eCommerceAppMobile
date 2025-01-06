@@ -69,4 +69,16 @@ public class UserController {
                 .build();
     }
 
+    @DeleteMapping("/{userID}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ApiResponse<UserResponse> deleteUser(
+            @PathVariable String userID)
+    {
+        userService.deleteUser(userID);
+        return ApiResponse.<UserResponse>builder()
+                .status(HttpStatus.OK.value())
+                .message("DELETE SUCCESSFULLY")
+                .build();
+    }
+
 }

@@ -6,10 +6,12 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javaproject.desktop.dtos.responses.ProductResponse;
+import javaproject.desktop.dtos.responses.UserResponse;
 import javaproject.desktop.services.ProductService;
+import javaproject.desktop.services.UserService;
+import javaproject.desktop.untils.Constant;
 
-public class ProductController {
+public class UserController {
 
     private String id;
 
@@ -17,29 +19,34 @@ public class ProductController {
     private Button delBtn;
 
     @FXML
-    private ImageView itemImg;
+    private ImageView userImg;
 
     @FXML
-    private Label itemName;
+    private Label userName;
 
     @FXML
-    private Label itemPrice;
+    private Label userPhone;
+    @FXML
+    private Label userEmail;
 
     @FXML
-    private void deleteItem(ActionEvent event)
-    {
-        ProductService productService = new ProductService();
+    private void deleteItem(ActionEvent event) throws Exception {
+        UserService service = new UserService();
+        service.deleteUser(id);
+        Constant.setChanged(true);
     }
 
-    public void setData(ProductResponse item)
+    public void setData(UserResponse user)
     {
-        String fullPath = STR."D:\\Study\\JAVA\\Project\\server\\\{item.getImageURL()}";
+        String fullPath = STR."D:\\Study\\JAVA\\Project\\server\\\{user.getImageURL()}";
         Image image = new Image(STR."file:\{fullPath}");
-        itemImg.setImage(image);
+        userImg.setImage(image);
 
-        itemName.setText(item.getName());
-        itemPrice.setText(STR."$ \{item.getPrice().toString()}");
-        id = item.getId();
+        userName.setText(user.getUsername());
+        userPhone.setText(user.getPhoneNumber());
+        userEmail.setText(user.getEmail());
+
+        id = user.getId();
     }
 
 }

@@ -54,8 +54,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
             if(authHeader == null || !authHeader.startsWith("Bearer ")) // null header or different auth type
             {
-//                response.sendError(HttpServletResponse.SC_UNAUTHORIZED,"Unauthorized");
-//                return;
                 sendErrorResponse(response, new AppException(ErrorCode.INVALID_REQUEST).getApiResponse());
                 return;
             }
@@ -76,48 +74,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
             // Đặt Authentication vào SecurityContext
             SecurityContextHolder.getContext().setAuthentication(auth);
-
-            /*
-
-             */
-
-//            final String jwtToken = authHeader.substring(7);
-//            final String userID = jwtService.extractUserID(jwtToken);
-//
-//            // If userID is existed and Authentication is empty
-////            if(userID != null && SecurityContextHolder.getContext().getAuthentication() == null)
-////            {
-////                // Load user
-////                UserDetails userDetail = userDetailsService.loadUserByID(userID);
-////                if(userDetail == null)
-////                {
-////                    response.sendError(HttpServletResponse.SC_UNAUTHORIZED,"Unauthorized");
-////                    return;
-////                }
-////
-////                // Check token is valid or not
-////                if (jwtService.isValidToken(jwtToken, userDetail))
-////                {
-////                    UsernamePasswordAuthenticationToken authenticationToken =
-////                            new UsernamePasswordAuthenticationToken(
-////                                    userDetail,
-////                                    null,
-////                                    userDetail.getAuthorities());
-////
-////                    authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-////                    SecurityContextHolder.getContext().setAuthentication(authenticationToken);
-////
-////                }
-////            }
-//
-//            if(userID == null || !userRepository.existsById(userID))
-//            {
-////                response.sendError(HttpServletResponse.SC_UNAUTHORIZED,"Unauthorized");
-////                return;
-//
-//                sendErrorResponse(response, new AppException(ErrorCode.INVALID_REQUEST).getApiResponse());
-//                return;
-//            }
 
              filterChain.doFilter(request,response);
 

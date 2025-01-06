@@ -3,8 +3,8 @@ CREATE TABLE IF NOT EXISTS cart_items (
     cart_id VARCHAR(36) NOT NULL,
     product_id VARCHAR(36) NOT NULL ,
     quantity INT NOT NULL DEFAULT 1,
-    FOREIGN KEY (cart_id) REFERENCES carts(id),
-    FOREIGN KEY (product_id) REFERENCES products(id)
+    FOREIGN KEY (cart_id) REFERENCES carts(id) ON DELETE  CASCADE,
+    FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE  CASCADE
 );
 
 INSERT INTO cart_items (id, cart_id, product_id, quantity)
